@@ -1,5 +1,4 @@
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -162,7 +161,6 @@ public class Teste_Treinamento {
         driver.quit();
     }
     @Test
-    @Ignore
     public void testeLinks(){
 
         System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
@@ -171,6 +169,9 @@ public class Teste_Treinamento {
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
         driver.findElement(By.linkText("Voltar")).click();
+        Assert.assertEquals("Voltou!", driver.findElement(By.id("resultado")).getText());
+
+        driver.quit();
     }
     @Test
     public void testeBuscaTextos(){
@@ -180,8 +181,15 @@ public class Teste_Treinamento {
         WebDriver driver = new FirefoxDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
-        Assert.assertTrue(driver.findElement(By.tagName("body"))
-                .getText().contains("Campo de Treinamento"));
+//      Busca o texto em qualquer lugar na tela de acordo com tag body(corpo html)
+//        Assert.assertTrue(driver.findElement(By.tagName("body"))
+//                .getText().contains("Campo de Treinamento"));
+
+//      Buscando titulo Campo de Treinamento na tela
+        Assert.assertEquals("Campo de Treinamento", driver.findElement(By.tagName("h3")).getText());
+//      Buscando "Cuidado onde clica, muitas armadilhas..."
+        Assert.assertEquals("Cuidado onde clica, muitas armadilhas...",
+                driver.findElement(By.className("facilAchar")).getText());
 
         driver.quit();
     }
