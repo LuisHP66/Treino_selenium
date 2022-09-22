@@ -1,17 +1,20 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class Teste_google {
+import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 
+
+public class Teste_google {
     @Test
     public void teste(){
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
-        driver.get("http://www.google.com");
-        Assert.assertEquals("Google", driver.getTitle());
-            driver.quit();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+            driver.get("http://www.google.com");
+                Assert.assertEquals("Google", driver.getTitle());
+                    driver.quit();
     }
 }

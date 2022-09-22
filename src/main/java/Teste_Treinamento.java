@@ -1,8 +1,10 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
@@ -14,9 +16,8 @@ public class Teste_Treinamento {
     public void testeTextField(){
 
 //        Drive do firefox
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                    "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
 //        System.getProperty("user.dir"), pega raiz do projeto
 //        Importei os arquivos para executar em qualquer maquina.
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
@@ -36,9 +37,8 @@ public class Teste_Treinamento {
     @Test
     public void testeCampoSugestao(){
 
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
         driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("testestestes");
@@ -50,9 +50,8 @@ public class Teste_Treinamento {
     @Test
     public void testeRadioButton() {
 
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
 //        Seleção botão sexo feminino
@@ -67,9 +66,8 @@ public class Teste_Treinamento {
     @Test
     public void testeComboBox() {
 
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
 //        Para clicar no combobox e selecionar.
@@ -88,9 +86,8 @@ public class Teste_Treinamento {
     @Test
     public void testeVerificaValoresComboBox() {
 
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
 //        Para clicar no combobox e selecionar.
@@ -118,9 +115,8 @@ public class Teste_Treinamento {
     @Test
     public void testeComboBoxMultiplaEscolha() {
 
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
 //      Para clicar no combobox e selecionar mais de uma opção
@@ -147,9 +143,8 @@ public class Teste_Treinamento {
     @Test
     public void validaBotao(){
 
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
 //      Criando elemento do botão para ser mais facil declarar o componente.
@@ -163,9 +158,8 @@ public class Teste_Treinamento {
     @Test
     public void testeLinks(){
 
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
         driver.findElement(By.linkText("Voltar")).click();
@@ -176,9 +170,8 @@ public class Teste_Treinamento {
     @Test
     public void testeBuscaTextos(){
 
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
 //      Busca o texto em qualquer lugar na tela de acordo com tag body(corpo html)

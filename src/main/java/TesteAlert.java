@@ -1,8 +1,10 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -11,9 +13,8 @@ import java.util.concurrent.TimeUnit;
 public class TesteAlert {
     @Test
     public void testeAlerta(){
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
         driver.findElement(By.id("alert")).click();
@@ -28,14 +29,13 @@ public class TesteAlert {
 //      Escrevendo o texto armazenado no campo especificado
         driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
 
-        //driver.quit();
+        driver.quit();
     }
     @Test
     public void testeConfirm(){
 
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 
 //      Utilizando a seleção confirmar
@@ -43,7 +43,7 @@ public class TesteAlert {
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Confirm Simples", alerta.getText());
         alerta.accept();
-        //Aumentando tempo para procurar o componente
+//      Aumentando tempo limite para achar o componente
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Assert.assertEquals("Confirmado", alerta.getText());
         alerta.accept();
@@ -55,7 +55,7 @@ public class TesteAlert {
         driver.findElement(By.id("confirm")).click();
         Assert.assertEquals("Confirm Simples", alerta.getText());
         alerta.dismiss();
-//      Aumentando tempo para procurar o componente
+//      Aumentando tempo limite para achar o componente
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Assert.assertEquals("Negado", alerta.getText());
         alerta.accept();
@@ -65,10 +65,10 @@ public class TesteAlert {
     }
     @Test
     public void testePronpt(){
-        System.setProperty("webdriver.gecko.driver", "/home/luis/Documentos/Drivers/" +
-                "geckodriver-v0.31.0-linux64/geckodriver");
-        WebDriver driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+
         //Maneira que Everton explicou para time
         //WebDriverWait wait = new WebDriverWait(driver,10);
         //wait.until(web -> {return web.findElement(By.id("prompt")).isDisplayed();});
@@ -127,7 +127,5 @@ public class TesteAlert {
         alerta.accept();
 
         driver.quit();
-
-
     }
 }
