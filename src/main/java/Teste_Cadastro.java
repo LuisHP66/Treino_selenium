@@ -1,51 +1,50 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class Teste_Cadastro {
-    @Test
-    public void Cadastro(){
+    private WebDriver driver;
+    private DSL dsl;
+    private  CampoTreinamentoPage page;
+    @Before
+    public void inicializa(){
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-
+        dsl = new DSL(driver);
+        page = new CampoTreinamentoPage(driver);
+    }
+    @After
+    public void termina(){
+        driver.quit();
+    }
+    @Test
+    public void Cadastro() {
 //      Nome
-        driver.findElement(By.id("elementosForm:nome")).sendKeys("Luis Henrique");
-
+        page.setNome("Luis Henrique");
 //      Sobrenome
-        driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Petsch");
-
-        //        Seleção botão sexo masculino
-        driver.findElement(By.id("elementosForm:sexo:0")).click();
-
+        page.setSobrenome("Petsch");
+//      Seleção botão sexo masculino
+        page.setSexoMasculino();
 //      Escolhendo comida favorita
-        driver.findElement(By.id("elementosForm:comidaFavorita:2")).click();
-
+        page.setPizza();
 //      Seleção grau de escolaridade
-        WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
-        Select combo = new Select(element);
-        combo.selectByVisibleText("2o grau completo");
-
+        page.setGrauEscolar("2o grau completo");
+        Assert.assertEquals("2o grau completo", dsl.Obter_valor_combo("elementosForm:escolaridade"));
 //      Selecionando os esportes praticados
-        element = driver.findElement(By.id("elementosForm:esportes"));
-        combo = new Select(element);
-        combo.selectByVisibleText("Futebol");
-        combo.selectByVisibleText("Corrida");
-
-        //Adicionando sugestões e validando
-        driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("testestestes");
-
-        Assert.assertEquals("Status: Nao cadastrado",
-                driver.findElement(By.id("resultado")).getText());
-        //Clicando no cadastrar
-            driver.findElement(By.id("elementosForm:cadastrar")).click();
-
-        //Validando textos que apareceram apos o cadastro
+        page.setFutebol();
+        page.setCorrida();
+//      Adicionando sugestões
+        page.setSugestao("testestestes");
+//      Validando texto da tela
+        Assert.assertEquals("Status: Nao cadastrado", page.obterResultadoCadastro());
+//      Clicando no cadastrar
+        page.setCadastrar();
+//      Validando textos que apareceram apos o cadastro
         Assert.assertEquals("Cadastrado!\n" +
                         "Nome: Luis Henrique\n" +
                         "Sobrenome: Petsch\n" +
@@ -54,7 +53,6 @@ public class Teste_Cadastro {
                         "Escolaridade: 2graucomp\n" +
                         "Esportes: Futebol Corrida\n" +
                         "Sugestoes: testestestes",
-                driver.findElement(By.id("resultado")).getText());
-        driver.quit();
-    }
+                dsl.obter_texto("resultado"));
+   }
 }

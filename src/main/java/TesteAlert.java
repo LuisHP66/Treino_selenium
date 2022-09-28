@@ -1,23 +1,34 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
 public class TesteAlert {
+    private WebDriver driver;
+    private DSL dsl;
+
+    @Before
+    public void inicializa(){
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL(driver);
+    }
+    @After
+    public void termina(){
+        driver.quit();
+    }
     @Test
     public void testeAlerta(){
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-
-        driver.findElement(By.id("alert")).click();
+        dsl.clica_botao("alert");
 //      Mudando foco da tela para o alerta
         Alert alert = driver.switchTo().alert();
 //      Armazenando o texo do alerta para escrever depois
@@ -27,19 +38,12 @@ public class TesteAlert {
 //      Aceitando o alerta
         alert.accept();
 //      Escrevendo o texto armazenado no campo especificado
-        driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
-
-        driver.quit();
+        dsl.escreve("elementosForm:nome", texto);
     }
     @Test
     public void testeConfirm(){
-
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-
 //      Utilizando a seleção confirmar
-        driver.findElement(By.id("confirm")).click();
+        dsl.clica_botao("confirm");
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Confirm Simples", alerta.getText());
         alerta.accept();
@@ -47,33 +51,27 @@ public class TesteAlert {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Assert.assertEquals("Confirmado", alerta.getText());
         alerta.accept();
-        driver.findElement(By.id("elementosForm:nome")).sendKeys("Confirmado");
+        dsl.escreve("elementosForm:nome", "Confirmado");
         driver.findElement(By.id("elementosForm:nome")).clear();
 
 //      Utilizando a seleção cancelar
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.findElement(By.id("confirm")).click();
+        dsl.clica_botao("confirm");
         Assert.assertEquals("Confirm Simples", alerta.getText());
         alerta.dismiss();
 //      Aumentando tempo limite para achar o componente
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Assert.assertEquals("Negado", alerta.getText());
         alerta.accept();
-        driver.findElement(By.id("elementosForm:nome")).sendKeys("Negado");
-
-        driver.quit();
+        dsl.escreve("elementosForm:nome", "Negado");
     }
     @Test
     public void testePronpt(){
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-
         //Maneira que Everton explicou para time
         //WebDriverWait wait = new WebDriverWait(driver,10);
         //wait.until(web -> {return web.findElement(By.id("prompt")).isDisplayed();});
 
-        driver.findElement(By.id("prompt")).click();
+        dsl.clica_botao("prompt");
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Digite um numero", alerta.getText());
         alerta.sendKeys("11");
@@ -87,7 +85,7 @@ public class TesteAlert {
         Assert.assertEquals(":(", alerta.getText());
         alerta.accept();
 
-        driver.findElement(By.id("prompt")).click();
+        dsl.clica_botao("prompt");
         Assert.assertEquals("Digite um numero", alerta.getText());
         alerta.sendKeys("11");
         alerta.dismiss();
@@ -100,7 +98,7 @@ public class TesteAlert {
         Assert.assertEquals(":D", alerta.getText());
         alerta.accept();
 
-        driver.findElement(By.id("prompt")).click();
+        dsl.clica_botao("prompt");
         Assert.assertEquals("Digite um numero", alerta.getText());
         alerta.sendKeys("11");
         alerta.accept();
@@ -113,7 +111,7 @@ public class TesteAlert {
         Assert.assertEquals(":D", alerta.getText());
         alerta.accept();
 
-        driver.findElement(By.id("prompt")).click();
+        dsl.clica_botao("prompt");
         Assert.assertEquals("Digite um numero", alerta.getText());
         alerta.sendKeys("11");
         alerta.accept();
@@ -125,7 +123,5 @@ public class TesteAlert {
         wait.until(web -> {return web.switchTo().alert();});
         Assert.assertEquals(":(", alerta.getText());
         alerta.accept();
-
-        driver.quit();
     }
 }
