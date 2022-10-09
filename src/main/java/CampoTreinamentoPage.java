@@ -1,7 +1,11 @@
+import org.junit.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
 public class CampoTreinamentoPage {
     private static DSL dsl;
+    private WebDriver driver;
+
     public CampoTreinamentoPage(WebDriver driver){
         dsl = new DSL(driver);
     }
@@ -61,5 +65,23 @@ public class CampoTreinamentoPage {
     }
     public String obterResultadoCadastro() {
         return dsl.obter_texto("resultado");
+    }
+    public void setBottonAlert(){
+        dsl.clica_botao("alert");
+    }
+    public void setBottonConfirm(){
+        dsl.clica_botao("confirm");
+    }
+    public void setBottonPronpt(){
+        dsl.clica_botao("prompt");
+    }
+    public void setBottonFrame(){
+        dsl.clica_botao("frameButton");
+    }
+    public void setBottonEasy() {
+        dsl.clica_botao("buttonPopUpEasy");
+    }
+    public void setBottonHard() {
+        dsl.clica_botao("buttonPopUpHard");
     }
 }

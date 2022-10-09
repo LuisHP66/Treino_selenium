@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class TesteFremes_Janelas {
     private WebDriver driver;
     private DSL dsl;
+    private  CampoTreinamentoPage page;
 
     @Before
     public void inicializa(){
@@ -18,6 +19,7 @@ public class TesteFremes_Janelas {
         driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL(driver);
+        page = new CampoTreinamentoPage(driver);
     }
     @After
     public void termina(){
@@ -27,7 +29,7 @@ public class TesteFremes_Janelas {
     @Test
     public void InterageFrame() {
         driver.switchTo().frame("frame1");
-        dsl.clica_botao("frameButton");
+        page.setBottonFrame();
 
         driver.switchTo().alert();
         Alert alerta = driver.switchTo().alert();
@@ -35,12 +37,12 @@ public class TesteFremes_Janelas {
         alerta.accept();
 
         driver.switchTo().defaultContent();
-        dsl.escreve("elementosForm:nome","Frame OK!");
+        page.setNome("Frame OK!");
         Assert.assertEquals("Frame OK!", dsl.ValorCampo("elementosForm:nome"));
     }
     @Test
     public void interageJanela() {
-        dsl.clica_botao("buttonPopUpEasy");
+        page.setBottonEasy();
         driver.switchTo().window("Popup");
         driver.findElement(By.tagName("textarea")).sendKeys("Deu boa?");
         driver.close();
@@ -49,7 +51,7 @@ public class TesteFremes_Janelas {
     }
     @Test
     public void interageJanela_sem_titulo() {
-        dsl.clica_botao("buttonPopUpHard");
+        page.setBottonHard();
 
         //window espera String, como estava usando objeto usei (String) para funcionar
         //Iria usar o segundo condigo do handles, porém fica mais dinamico assim,

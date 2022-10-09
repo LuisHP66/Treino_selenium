@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 public class TesteRegras_preenchimento {
     private WebDriver driver;
     private DSL dsl;
+    private CampoTreinamentoPage page;
 
     @Before
     public void inicializa(){
@@ -20,6 +21,7 @@ public class TesteRegras_preenchimento {
         driver = new ChromeDriver();
         driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL(driver);
+        page = new CampoTreinamentoPage(driver);
     }
     @After
     public void termina(){
@@ -27,7 +29,7 @@ public class TesteRegras_preenchimento {
     }
     @Test
     public void Regra_nome() {
-        dsl.clica_botao("elementosForm:cadastrar");
+        page.setCadastrar();
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Nome eh obrigatorio", alerta.getText());
         alerta.accept();
@@ -35,8 +37,8 @@ public class TesteRegras_preenchimento {
 
     @Test
     public void Regra_sobrenome() {
-        dsl.escreve("elementosForm:nome", "Luis Henrique");
-        dsl.clica_botao("elementosForm:cadastrar");
+        page.setNome("Luis Henrique");
+        page.setCadastrar();
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Sobrenome eh obrigatorio", alerta.getText());
         alerta.accept();
@@ -44,9 +46,9 @@ public class TesteRegras_preenchimento {
 
     @Test
     public void Regra_sexo() {
-        dsl.escreve("elementosForm:nome", "Luis Henrique");
-        dsl.escreve("elementosForm:sobrenome", "Petsch");
-        dsl.clica_botao("elementosForm:cadastrar");
+        page.setNome("Luis Henrique");
+        page.setSobrenome("Petsch");
+        page.setCadastrar();
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Sexo eh obrigatorio", alerta.getText());
         alerta.accept();
@@ -54,28 +56,28 @@ public class TesteRegras_preenchimento {
 
     @Test
     public void Regra_comidaFavorita() {
-        dsl.escreve("elementosForm:nome", "Luis Henrique");
-        dsl.escreve("elementosForm:sobrenome", "Petsch");
-        dsl.clica_botao("elementosForm:sexo:0");
+        page.setNome("Luis Henrique");
+        page.setSobrenome("Petsch");
+        page.setSexoMasculino();
 
         //Validação com carne e vegetariano
-        dsl.clica_botao("elementosForm:comidaFavorita:0");
-        dsl.clica_botao("elementosForm:comidaFavorita:3");
-        dsl.clica_botao("elementosForm:cadastrar");
+        page.setCarne();
+        page.setVegetariano();
+        page.setCadastrar();
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Tem certeza que voce eh vegetariano?", alerta.getText());
         alerta.accept();
 
         //Validação com frango, carne e vegetariano
-        dsl.clica_botao("elementosForm:comidaFavorita:1");
-        dsl.clica_botao("elementosForm:cadastrar");
+        page.setFrango();
+        page.setCadastrar();
         Alert alerta1 = driver.switchTo().alert();
         Assert.assertEquals("Tem certeza que voce eh vegetariano?", alerta1.getText());
         alerta1.accept();
 
         //Validação com frango e vegetariano
-        dsl.clica_botao("elementosForm:comidaFavorita:0");
-        dsl.clica_botao("elementosForm:cadastrar");
+        page.setCarne();
+        page.setCadastrar();
         Alert alerta2 = driver.switchTo().alert();
         Assert.assertEquals("Tem certeza que voce eh vegetariano?", alerta2.getText());
         alerta2.accept();
@@ -83,13 +85,14 @@ public class TesteRegras_preenchimento {
 
     @Test
     public void Regra_esporte() {
-        dsl.escreve("elementosForm:nome", "Luis Henrique");
-        dsl.escreve("elementosForm:sobrenome", "Petsch");
-        dsl.clica_botao("elementosForm:sexo:0");
-        dsl.clica_botao("elementosForm:comidaFavorita:0");
-        dsl.selecao_combo("elementosForm:esportes", "Natacao");
-        dsl.selecao_combo("elementosForm:esportes", "O que eh esporte?");
-        dsl.clica_botao("elementosForm:cadastrar");
+        page.setNome("Luis Henrique");
+        page.setSobrenome("Petsch");
+        page.setSexoMasculino();
+        page.setCarne();
+
+        page.setNatacao();
+        page.setOqEsporte();
+        page.setCadastrar();
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Voce faz esporte ou nao?", alerta.getText());
         alerta.accept();
@@ -97,25 +100,25 @@ public class TesteRegras_preenchimento {
         WebElement element = driver.findElement(By.id("elementosForm:esportes"));
         Select combo = new Select(element);
         combo.deselectAll();
-        dsl.selecao_combo("elementosForm:esportes", "Futebol");
-        dsl.selecao_combo("elementosForm:esportes", "O que eh esporte?");
-        driver.findElement(By.id("elementosForm:cadastrar")).click();
+        page.setFutebol();
+        page.setOqEsporte();
+        page.setCadastrar();
         Alert alerta1 = driver.switchTo().alert();
         Assert.assertEquals("Voce faz esporte ou nao?", alerta1.getText());
         alerta1.accept();
 
         combo.deselectAll();
-        dsl.selecao_combo("elementosForm:esportes", "Corrida");
-        dsl.selecao_combo("elementosForm:esportes", "O que eh esporte?");
-        driver.findElement(By.id("elementosForm:cadastrar")).click();
+        page.setCorrida();
+        page.setOqEsporte();
+        page.setCadastrar();
         Alert alerta2 = driver.switchTo().alert();
         Assert.assertEquals("Voce faz esporte ou nao?", alerta2.getText());
         alerta2.accept();
 
         combo.deselectAll();
-        dsl.selecao_combo("elementosForm:esportes", "Karate");
-        dsl.selecao_combo("elementosForm:esportes", "O que eh esporte?");
-        driver.findElement(By.id("elementosForm:cadastrar")).click();
+        page.setKarate();
+        page.setOqEsporte();
+        page.setCadastrar();
         Alert alerta3 = driver.switchTo().alert();
         Assert.assertEquals("Voce faz esporte ou nao?", alerta3.getText());
         alerta3.accept();
