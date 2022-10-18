@@ -4,11 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 
 public class TesteRegras_preenchimento {
     private WebDriver driver;
@@ -60,27 +57,12 @@ public class TesteRegras_preenchimento {
         page.setSobrenome("Petsch");
         page.setSexoMasculino();
 
-        //Validação com carne e vegetariano
         page.setCarne();
         page.setVegetariano();
         page.setCadastrar();
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Tem certeza que voce eh vegetariano?", alerta.getText());
         alerta.accept();
-
-        //Validação com frango, carne e vegetariano
-        page.setFrango();
-        page.setCadastrar();
-        Alert alerta1 = driver.switchTo().alert();
-        Assert.assertEquals("Tem certeza que voce eh vegetariano?", alerta1.getText());
-        alerta1.accept();
-
-        //Validação com frango e vegetariano
-        page.setCarne();
-        page.setCadastrar();
-        Alert alerta2 = driver.switchTo().alert();
-        Assert.assertEquals("Tem certeza que voce eh vegetariano?", alerta2.getText());
-        alerta2.accept();
      }
 
     @Test
@@ -90,37 +72,10 @@ public class TesteRegras_preenchimento {
         page.setSexoMasculino();
         page.setCarne();
 
-        page.setNatacao();
-        page.setOqEsporte();
+        page.setEsporte("Natacao", "O que eh esporte?");
         page.setCadastrar();
         Alert alerta = driver.switchTo().alert();
         Assert.assertEquals("Voce faz esporte ou nao?", alerta.getText());
         alerta.accept();
-
-        WebElement element = driver.findElement(By.id("elementosForm:esportes"));
-        Select combo = new Select(element);
-        combo.deselectAll();
-        page.setFutebol();
-        page.setOqEsporte();
-        page.setCadastrar();
-        Alert alerta1 = driver.switchTo().alert();
-        Assert.assertEquals("Voce faz esporte ou nao?", alerta1.getText());
-        alerta1.accept();
-
-        combo.deselectAll();
-        page.setCorrida();
-        page.setOqEsporte();
-        page.setCadastrar();
-        Alert alerta2 = driver.switchTo().alert();
-        Assert.assertEquals("Voce faz esporte ou nao?", alerta2.getText());
-        alerta2.accept();
-
-        combo.deselectAll();
-        page.setKarate();
-        page.setOqEsporte();
-        page.setCadastrar();
-        Alert alerta3 = driver.switchTo().alert();
-        Assert.assertEquals("Voce faz esporte ou nao?", alerta3.getText());
-        alerta3.accept();
     }
 }

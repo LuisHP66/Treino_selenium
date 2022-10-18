@@ -1,5 +1,3 @@
-import org.junit.Assert;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
 public class CampoTreinamentoPage {
@@ -45,17 +43,9 @@ public class CampoTreinamentoPage {
     public void setVegetariano(){
         dsl.clicarRadio("elementosForm:comidaFavorita:3");
     }
-    public void setFutebol(){
-        dsl.selecao_combo("elementosForm:esportes", "Futebol");
-    }
-    public void setCorrida(){
-        dsl.selecao_combo("elementosForm:esportes", "Corrida");
-    }
-    public void setNatacao(){
-        dsl.selecao_combo("elementosForm:esportes", "Natacao");
-    }
-    public void setKarate(){
-        dsl.selecao_combo("elementosForm:esportes", "Karate");
+    public void setEsporte(String... valores){
+        for(String valor: valores)
+        dsl.selecao_combo("elementosForm:esportes", valor);
     }
     public void setOqEsporte(){
         dsl.selecao_combo("elementosForm:esportes", "O que eh esporte?");
@@ -83,5 +73,8 @@ public class CampoTreinamentoPage {
     }
     public void setBottonHard() {
         dsl.clica_botao("buttonPopUpHard");
+    }
+    public Object obterValorEscolaridade(){
+        return dsl.Obter_valor_combo("elementosForm:escolaridade");
     }
 }

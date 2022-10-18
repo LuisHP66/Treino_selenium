@@ -7,7 +7,6 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
@@ -78,12 +77,8 @@ public class TesteAlert {
         Assert.assertEquals("Digite um numero", alerta.getText());
         alerta.sendKeys("11");
         alerta.dismiss();
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        wait.until(web -> {return web.switchTo().alert();});
         Assert.assertEquals("Era null?", alerta.getText());
         alerta.dismiss();
-        WebDriverWait wait1 = new WebDriverWait(driver,10);
-        wait.until(web -> {return web.switchTo().alert();});
         Assert.assertEquals(":(", alerta.getText());
         alerta.accept();
 
@@ -91,12 +86,8 @@ public class TesteAlert {
         Assert.assertEquals("Digite um numero", alerta.getText());
         alerta.sendKeys("11");
         alerta.dismiss();
-        WebDriverWait wait2 = new WebDriverWait(driver,10);
-        wait.until(web -> {return web.switchTo().alert();});
         Assert.assertEquals("Era null?", alerta.getText());
         alerta.accept();
-        WebDriverWait wait3 = new WebDriverWait(driver,10);
-        wait.until(web -> {return web.switchTo().alert();});
         Assert.assertEquals(":D", alerta.getText());
         alerta.accept();
 
@@ -104,12 +95,9 @@ public class TesteAlert {
         Assert.assertEquals("Digite um numero", alerta.getText());
         alerta.sendKeys("11");
         alerta.accept();
-        WebDriverWait wait4 = new WebDriverWait(driver,10);
-        wait.until(web -> {return web.switchTo().alert();});
         Assert.assertEquals("Era 11?", alerta.getText());
         alerta.accept();
-        WebDriverWait wait5 = new WebDriverWait(driver,10);
-        wait.until(web -> {return web.switchTo().alert();});
+
         Assert.assertEquals(":D", alerta.getText());
         alerta.accept();
 
@@ -117,12 +105,8 @@ public class TesteAlert {
         Assert.assertEquals("Digite um numero", alerta.getText());
         alerta.sendKeys("11");
         alerta.accept();
-        WebDriverWait wait6 = new WebDriverWait(driver,10);
-        wait.until(web -> {return web.switchTo().alert();});
         Assert.assertEquals("Era 11?", alerta.getText());
         alerta.dismiss();
-        WebDriverWait wait7 = new WebDriverWait(driver,10);
-        wait.until(web -> {return web.switchTo().alert();});
         Assert.assertEquals(":(", alerta.getText());
         alerta.accept();
     }

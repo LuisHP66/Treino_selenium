@@ -93,8 +93,7 @@ public class Teste_Treinamento {
 //      Para clicar no combobox e selecionar mais de uma opção
         WebElement element = driver.findElement(By.id("elementosForm:esportes"));
         Select combo = new Select(element);
-        page.setFutebol();
-        page.setCorrida();
+        page.setEsporte("Futebol", "Corrida");
 
 //      Validando as opções
         List<WebElement> options = combo.getOptions();

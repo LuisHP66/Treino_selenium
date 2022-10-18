@@ -34,10 +34,9 @@ public class Teste_Cadastro {
         page.setPizza();
 //      Seleção grau de escolaridade
         page.setGrauEscolar("2o grau completo");
-        Assert.assertEquals("2o grau completo", dsl.Obter_valor_combo("elementosForm:escolaridade"));
+        Assert.assertEquals("2o grau completo", page.obterValorEscolaridade());
 //      Selecionando os esportes praticados
-        page.setFutebol();
-        page.setCorrida();
+        page.setEsporte("Futebol", "Corrida");
 //      Adicionando sugestões
         page.setSugestao("testestestes");
 //      Validando texto da tela
@@ -53,6 +52,6 @@ public class Teste_Cadastro {
                         "Escolaridade: 2graucomp\n" +
                         "Esportes: Futebol Corrida\n" +
                         "Sugestoes: testestestes",
-                dsl.obter_texto("resultado"));
+                page.obterResultadoCadastro());
    }
 }
