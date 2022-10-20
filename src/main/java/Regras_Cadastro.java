@@ -5,7 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.Alert;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -18,17 +19,17 @@ public class Regras_Cadastro {
     private WebDriver driver;
     private DSL dsl;
     private CampoTreinamentoPage page;
-    @Parameterized.Parameter
+    @Parameter
     public String nome;
-    @Parameterized.Parameter(value = 1)
+    @Parameter(value = 1)
     public String sobrenome;
-    @Parameterized.Parameter(value = 2)
+    @Parameter(value = 2)
     public String sexo;
-    @Parameterized.Parameter(value = 3)
+    @Parameter(value = 3)
     public List<String> comidas;
-    @Parameterized.Parameter(value = 4)
+    @Parameter(value = 4)
     public String[] esportes;
-    @Parameterized.Parameter(value = 5)
+    @Parameter(value = 5)
     public String mensagem;
 
     @Before
@@ -44,7 +45,7 @@ public class Regras_Cadastro {
     public void termina(){
         driver.quit();
     }
-    @Parameterized.Parameters
+    @Parameters
    public static Collection<Object[]>getCollection(){
         return Arrays.asList(new Object[][] {
                 {"", "", "", Arrays.asList(), new String[]{}, "Nome eh obrigatorio"},
@@ -68,8 +69,8 @@ public class Regras_Cadastro {
         if (comidas.contains("Vegetariano"))page.setVegetariano();
         if (comidas.contains("Frango"))page.setFrango();
         page.setEsporte(esportes);
-        Alert alerta = driver.switchTo().alert();
-        Assert.assertEquals(mensagem, alerta.getText());
-        alerta.accept();
+        page.setCadastrar();
+        System.out.println(mensagem);
+        Assert.assertEquals(mensagem, dsl.alertaObterTextoAcept());
     }
 }

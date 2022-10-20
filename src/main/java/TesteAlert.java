@@ -8,8 +8,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.concurrent.TimeUnit;
-
 public class TesteAlert {
     private WebDriver driver;
     private DSL dsl;
@@ -45,25 +43,15 @@ public class TesteAlert {
     public void testeConfirm(){
 //      Utilizando a seleção confirmar
         page.setBottonConfirm();
-        Alert alerta = driver.switchTo().alert();
-        Assert.assertEquals("Confirm Simples", alerta.getText());
-        alerta.accept();
-//      Aumentando tempo limite para achar o componente
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        Assert.assertEquals("Confirmado", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Confirm Simples", dsl.alertaObterTextoAcept());
+        Assert.assertEquals("Confirmad", dsl.alertaObterTextoAcept());
         page.setNome("Confirmado");
         driver.findElement(By.id("elementosForm:nome")).clear();
 
 //      Utilizando a seleção cancelar
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         page.setBottonConfirm();
-        Assert.assertEquals("Confirm Simples", alerta.getText());
-        alerta.dismiss();
-//      Aumentando tempo limite para achar o componente
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        Assert.assertEquals("Negado", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Confirm Simples", dsl.alertaObterTextoAcept());
+        Assert.assertEquals("Negado", dsl.alertaObterTextoAcept());
         page.setNome("Negado");
     }
     @Test
@@ -73,41 +61,23 @@ public class TesteAlert {
         //wait.until(web -> {return web.findElement(By.id("prompt")).isDisplayed();});
 
         page.setBottonPronpt();
-        Alert alerta = driver.switchTo().alert();
-        Assert.assertEquals("Digite um numero", alerta.getText());
-        alerta.sendKeys("11");
-        alerta.dismiss();
-        Assert.assertEquals("Era null?", alerta.getText());
-        alerta.dismiss();
-        Assert.assertEquals(":(", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Digite um numero", dsl.ObterTextoDigitaDimiss("11"));
+        Assert.assertEquals("Era null?", dsl.alertaObterTextoDimiss());
+        Assert.assertEquals(":(", dsl.alertaObterTextoAcept());
 
         page.setBottonPronpt();
-        Assert.assertEquals("Digite um numero", alerta.getText());
-        alerta.sendKeys("11");
-        alerta.dismiss();
-        Assert.assertEquals("Era null?", alerta.getText());
-        alerta.accept();
-        Assert.assertEquals(":D", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Digite um numero", dsl.ObterTextoDigitaDimiss("11"));
+        Assert.assertEquals("Era null?", dsl.alertaObterTextoAcept());
+        Assert.assertEquals(":D", dsl.alertaObterTextoAcept());
 
         page.setBottonPronpt();
-        Assert.assertEquals("Digite um numero", alerta.getText());
-        alerta.sendKeys("11");
-        alerta.accept();
-        Assert.assertEquals("Era 11?", alerta.getText());
-        alerta.accept();
-
-        Assert.assertEquals(":D", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Digite um numero", dsl.ObterTextoDigitaAcept("11"));
+        Assert.assertEquals("Era 11?", dsl.alertaObterTextoAcept());
+        Assert.assertEquals(":D", dsl.alertaObterTextoAcept());
 
         page.setBottonPronpt();
-        Assert.assertEquals("Digite um numero", alerta.getText());
-        alerta.sendKeys("11");
-        alerta.accept();
-        Assert.assertEquals("Era 11?", alerta.getText());
-        alerta.dismiss();
-        Assert.assertEquals(":(", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Digite um numero", dsl.ObterTextoDigitaAcept("11"));
+        Assert.assertEquals("Era 11?", dsl.alertaObterTextoDimiss());
+        Assert.assertEquals(":(", dsl.alertaObterTextoAcept());
     }
 }

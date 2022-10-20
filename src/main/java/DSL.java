@@ -1,3 +1,4 @@
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,5 +43,31 @@ public class DSL {
     }
     public String obter_texto(String id_campo) {
         return obter_texto(By.id(id_campo));
+    }
+    public String alertaObterTextoAcept(){
+        Alert alert = driver.switchTo().alert();
+        String valor = alert.getText();
+        alert.accept();
+        return valor;
+    }
+    public String alertaObterTextoDimiss(){
+        Alert alert = driver.switchTo().alert();
+        String valor = alert.getText();
+        alert.dismiss();
+        return valor;
+    }
+    public String ObterTextoDigitaAcept(String texto){
+        Alert alert = driver.switchTo().alert();
+        String valor = alert.getText();
+        alert.sendKeys(texto);
+        alert.accept();
+        return valor;
+    }
+    public String ObterTextoDigitaDimiss(String texto){
+        Alert alert = driver.switchTo().alert();
+        String valor = alert.getText();
+        alert.sendKeys(texto);
+        alert.dismiss();
+        return valor;
     }
 }

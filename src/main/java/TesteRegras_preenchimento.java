@@ -3,7 +3,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -27,18 +26,14 @@ public class TesteRegras_preenchimento {
     @Test
     public void Regra_nome() {
         page.setCadastrar();
-        Alert alerta = driver.switchTo().alert();
-        Assert.assertEquals("Nome eh obrigatorio", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Nome eh obrigatorio", dsl.alertaObterTextoAcept());
     }
 
     @Test
     public void Regra_sobrenome() {
         page.setNome("Luis Henrique");
         page.setCadastrar();
-        Alert alerta = driver.switchTo().alert();
-        Assert.assertEquals("Sobrenome eh obrigatorio", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Sobrenome eh obrigatorio", dsl.alertaObterTextoAcept());
     }
 
     @Test
@@ -46,9 +41,7 @@ public class TesteRegras_preenchimento {
         page.setNome("Luis Henrique");
         page.setSobrenome("Petsch");
         page.setCadastrar();
-        Alert alerta = driver.switchTo().alert();
-        Assert.assertEquals("Sexo eh obrigatorio", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Sexo eh obrigatorio", dsl.alertaObterTextoAcept());
     }
 
     @Test
@@ -60,9 +53,7 @@ public class TesteRegras_preenchimento {
         page.setCarne();
         page.setVegetariano();
         page.setCadastrar();
-        Alert alerta = driver.switchTo().alert();
-        Assert.assertEquals("Tem certeza que voce eh vegetariano?", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Tem certeza que voce eh vegetariano?", dsl.alertaObterTextoAcept());
      }
 
     @Test
@@ -74,8 +65,6 @@ public class TesteRegras_preenchimento {
 
         page.setEsporte("Natacao", "O que eh esporte?");
         page.setCadastrar();
-        Alert alerta = driver.switchTo().alert();
-        Assert.assertEquals("Voce faz esporte ou nao?", alerta.getText());
-        alerta.accept();
+        Assert.assertEquals("Voce faz esporte ou nao?", dsl.alertaObterTextoAcept());
     }
 }
