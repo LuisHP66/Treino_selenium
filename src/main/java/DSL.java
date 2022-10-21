@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 public class DSL {
 
     private static WebDriver driver;
@@ -69,5 +71,43 @@ public class DSL {
         alert.sendKeys(texto);
         alert.dismiss();
         return valor;
+    }
+    public void ClicarButtonTabela(String colunaBusca, String valor, String colunaBotao, String idtabela){
+        //Procurar coluna do registro
+        WebElement tabela = driver.findElement(By.xpath("//*[id='elementosForm:tableUsuarios']"));
+        int idColuna = ObterIndiceColuna(colunaBusca, tabela);
+
+        //Procurar a linha do registro
+        int idlinha = ObterIndiceLinha(valor, tabela, idColuna);
+
+        //Procurar a coluna do botão
+        int idColunaBotao = ObterIndiceColuna(colunaBotao, tabela);
+
+        //Clicar no botão
+        WebElement celula = tabela.findElement(By.xpath(".//tr["+idlinha+"]/td["+idColunaBotao+"]"));
+        celula.findElement(By.xpath(".//input")).click();
+    }
+
+    protected int ObterIndiceLinha(String valor, WebElement tabela, int idColuna) {
+        List<WebElement> linhas = tabela.findElements(By.xpath(".//tr/td["+idColuna+"]"));
+        int idlinha = -1;
+        for (int i = 0; i < linhas.size(); i++) {
+            if (linhas.get(i).getText().equals(valor)) {
+                idlinha = i + 1;
+                break;
+            }
+        }
+        return idlinha;
+    }
+    protected int ObterIndiceColuna(String coluna, WebElement tabela) {
+        List<WebElement> colunas = tabela.findElements(By.xpath(".//th"));
+        int idColuna = -1;
+        for(int i = 0; i < colunas.size(); i++){
+            if (colunas.get(i).getText().equals(coluna)){
+                idColuna = i + 1;
+                break;
+            }
+        }
+        return idColuna;
     }
 }
