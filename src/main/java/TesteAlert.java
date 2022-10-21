@@ -44,13 +44,13 @@ public class TesteAlert {
 //      Utilizando a seleção confirmar
         page.setBottonConfirm();
         Assert.assertEquals("Confirm Simples", dsl.alertaObterTextoAcept());
-        Assert.assertEquals("Confirmad", dsl.alertaObterTextoAcept());
+        Assert.assertEquals("Confirmado", dsl.alertaObterTextoAcept());
         page.setNome("Confirmado");
         driver.findElement(By.id("elementosForm:nome")).clear();
 
 //      Utilizando a seleção cancelar
         page.setBottonConfirm();
-        Assert.assertEquals("Confirm Simples", dsl.alertaObterTextoAcept());
+        Assert.assertEquals("Confirm Simples", dsl.alertaObterTextoDimiss());
         Assert.assertEquals("Negado", dsl.alertaObterTextoAcept());
         page.setNome("Negado");
     }
