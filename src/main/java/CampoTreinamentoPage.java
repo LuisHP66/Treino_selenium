@@ -1,11 +1,12 @@
+import Factory.DSL;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import static Factory.DriveFactory.getDriver;
 
 public class CampoTreinamentoPage {
     private static DSL dsl;
-    private WebDriver driver;
-
-    public CampoTreinamentoPage(WebDriver driver){
-        dsl = new DSL(driver);
+    public CampoTreinamentoPage(){
+        dsl = new DSL();
     }
     public void setNome(String nome){
         dsl.escreve("elementosForm:nome", nome);
@@ -14,10 +15,10 @@ public class CampoTreinamentoPage {
         dsl.escreve("elementosForm:sobrenome", sobrenome);
     }
     public void setSexoFeminino(){
-        dsl.clicarRadio("elementosForm:sexo:1");
+        dsl.clicarRadio(By.id("elementosForm:sexo:1"));
     }
     public void setSexoMasculino(){
-        dsl.clicarRadio("elementosForm:sexo:0");
+        dsl.clicarRadio(By.id("elementosForm:sexo:0"));
     }
     public void setSugestao(String texto){
         dsl.escreve("elementosForm:sugestoes", texto);
@@ -32,16 +33,16 @@ public class CampoTreinamentoPage {
         dsl.clica_link("Voltar");
     }
     public void setCarne(){
-        dsl.clicarRadio("elementosForm:comidaFavorita:0");
+        dsl.clicarRadio(By.id("elementosForm:comidaFavorita:0"));
     }
     public void setFrango(){
-        dsl.clicarRadio("elementosForm:comidaFavorita:1");
+        dsl.clicarRadio(By.id("elementosForm:comidaFavorita:1"));
     }
     public void setPizza(){
-        dsl.clicarRadio("elementosForm:comidaFavorita:2");
+        dsl.clicarRadio(By.id("elementosForm:comidaFavorita:2"));
     }
     public void setVegetariano(){
-        dsl.clicarRadio("elementosForm:comidaFavorita:3");
+        dsl.clicarRadio(By.id("elementosForm:comidaFavorita:3"));
     }
     public void setEsporte(String... valores){
         for(String valor: valores)
@@ -54,7 +55,7 @@ public class CampoTreinamentoPage {
         dsl.clica_botao("elementosForm:cadastrar");
     }
     public String obterResultadoCadastro() {
-        return dsl.obter_texto("resultado");
+        return dsl.obter_texto(By.id("resultado"));
     }
     public void setBottonAlert(){
         dsl.clica_botao("alert");

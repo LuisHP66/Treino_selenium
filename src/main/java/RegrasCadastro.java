@@ -1,4 +1,4 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
+import Factory.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,16 +7,16 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import static Factory.DriveFactory.getDriver;
+import static Factory.DriveFactory.killDriver;
+
 @RunWith(Parameterized.class)
-public class Regras_Cadastro {
-    private WebDriver driver;
+public class RegrasCadastro {
     private DSL dsl;
     private CampoTreinamentoPage page;
     @Parameter
@@ -34,16 +34,14 @@ public class Regras_Cadastro {
 
     @Before
     public void inicializa(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
-        page = new CampoTreinamentoPage(driver);
+        getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL();
+        page = new CampoTreinamentoPage();
     }
 
     @After
     public void termina(){
-        driver.quit();
+        killDriver();
     }
     @Parameters
    public static Collection<Object[]>getCollection(){

@@ -1,27 +1,25 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
+import Factory.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-public class TesteRegras_preenchimento {
-    private WebDriver driver;
+import static Factory.DriveFactory.getDriver;
+import static Factory.DriveFactory.killDriver;
+
+public class TesteRegrasPreenchimento {
     private DSL dsl;
     private CampoTreinamentoPage page;
 
     @Before
     public void inicializa(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
-        page = new CampoTreinamentoPage(driver);
+        getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL();
+        page = new CampoTreinamentoPage();
     }
     @After
     public void termina(){
-        driver.quit();
+        killDriver();
     }
     @Test
     public void Regra_nome() {
@@ -49,7 +47,6 @@ public class TesteRegras_preenchimento {
         page.setNome("Luis Henrique");
         page.setSobrenome("Petsch");
         page.setSexoMasculino();
-
         page.setCarne();
         page.setVegetariano();
         page.setCadastrar();
@@ -62,7 +59,6 @@ public class TesteRegras_preenchimento {
         page.setSobrenome("Petsch");
         page.setSexoMasculino();
         page.setCarne();
-
         page.setEsporte("Natacao", "O que eh esporte?");
         page.setCadastrar();
         Assert.assertEquals("Voce faz esporte ou nao?", dsl.alertaObterTextoAcept());

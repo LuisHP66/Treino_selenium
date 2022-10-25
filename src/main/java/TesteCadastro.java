@@ -1,26 +1,21 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-public class Teste_Cadastro {
-    private WebDriver driver;
-    private DSL dsl;
+import static Factory.DriveFactory.getDriver;
+import static Factory.DriveFactory.killDriver;
+
+public class TesteCadastro {
     private  CampoTreinamentoPage page;
     @Before
     public void inicializa(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
-        page = new CampoTreinamentoPage(driver);
+        getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        page = new CampoTreinamentoPage();
     }
     @After
     public void termina(){
-        driver.quit();
+        killDriver();
     }
     @Test
     public void Cadastro() {

@@ -1,31 +1,29 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
+import Factory.DSL;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
-public class Teste_Treinamento {
-    private WebDriver driver;
+import static Factory.DriveFactory.getDriver;
+import static Factory.DriveFactory.killDriver;
+
+public class TesteTreinamento {
     private DSL dsl;
     private  CampoTreinamentoPage page;
     @Before
     public void inicializa(){
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-        dsl = new DSL(driver);
-        page = new CampoTreinamentoPage(driver);
+        getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        dsl = new DSL();
+        page = new CampoTreinamentoPage();
     }
     @After
     public void termina(){
-        driver.quit();
+        killDriver();
     }
     @Test
     public void testeTextField() {
@@ -67,7 +65,7 @@ public class Teste_Treinamento {
     @Test
     public void testeVerificaValoresComboBox() {
 //        Para clicar no combobox e selecionar.
-        WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
+        WebElement element = getDriver().findElement(By.id("elementosForm:escolaridade"));
         Select combo = new Select(element);
         List<WebElement> options = combo.getOptions();
 //        Valida quantas opções existem no ComboBox
@@ -91,7 +89,7 @@ public class Teste_Treinamento {
     @Test
     public void testeComboBoxMultiplaEscolha() {
 //      Para clicar no combobox e selecionar mais de uma opção
-        WebElement element = driver.findElement(By.id("elementosForm:esportes"));
+        WebElement element =getDriver().findElement(By.id("elementosForm:esportes"));
         Select combo = new Select(element);
         page.setEsporte("Futebol", "Corrida");
 
@@ -114,7 +112,7 @@ public class Teste_Treinamento {
     public void validaBotao() {
         page.setClick_Me();
 //      Validando o botão
-        WebElement botao = driver.findElement(By.id("buttonSimple"));
+        WebElement botao = getDriver().findElement(By.id("buttonSimple"));
         Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
     }
 
