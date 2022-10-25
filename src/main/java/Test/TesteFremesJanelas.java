@@ -1,4 +1,7 @@
+package Test;
+
 import Factory.DSL;
+import Page.CampoTreinamentoPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,7 +14,7 @@ import static Factory.DriveFactory.killDriver;
 
 public class TesteFremesJanelas {
     private DSL dsl;
-    private  CampoTreinamentoPage page;
+    private CampoTreinamentoPage page;
 
     @Before
     public void inicializa(){

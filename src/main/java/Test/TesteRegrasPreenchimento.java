@@ -1,4 +1,7 @@
+package Test;
+
 import Factory.DSL;
+import Page.CampoTreinamentoPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

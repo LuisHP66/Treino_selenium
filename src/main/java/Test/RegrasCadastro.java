@@ -1,4 +1,7 @@
+package Test;
+
 import Factory.DSL;
+import Page.CampoTreinamentoPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,11 +40,6 @@ public class RegrasCadastro {
         getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         dsl = new DSL();
         page = new CampoTreinamentoPage();
-    }
-
-    @After
-    public void termina(){
-        killDriver();
     }
     @Parameters
    public static Collection<Object[]>getCollection(){

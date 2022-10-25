@@ -1,3 +1,6 @@
+package Test;
+
+import Page.CampoTreinamentoPage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,15 +10,11 @@ import static Factory.DriveFactory.getDriver;
 import static Factory.DriveFactory.killDriver;
 
 public class TesteCadastro {
-    private  CampoTreinamentoPage page;
+    private CampoTreinamentoPage page;
     @Before
     public void inicializa(){
         getDriver().get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
         page = new CampoTreinamentoPage();
-    }
-    @After
-    public void termina(){
-        killDriver();
     }
     @Test
     public void Cadastro() {
