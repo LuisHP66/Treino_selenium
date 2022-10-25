@@ -12,10 +12,16 @@ public class DriveFactory {
 
     public static WebDriver getDriver(){
         if (driver == null) {
-            WebDriverManager.chromedriver().setup();
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--start-maximized");
-            driver = new ChromeDriver(options);
+            switch (Propriedades.browser){
+                case CHROME:
+                    WebDriverManager.chromedriver().setup();
+                    ChromeOptions options = new ChromeOptions();
+                    options.addArguments("--start-maximized");
+                    driver = new ChromeDriver(options);
+                    break;
+                case FIREFOX:WebDriverManager.firefoxdriver().setup();
+                    break;
+            }
         }
         return driver;
     }
